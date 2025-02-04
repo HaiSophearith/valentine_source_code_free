@@ -7,6 +7,7 @@
   <title>Valentines Day</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    /* Default gradient background */
     .gradient-background {
       background: rgb(255, 208, 229);
       background: linear-gradient(180deg, rgba(255, 208, 229, 1) 0%, rgba(255, 232, 242, 1) 36%, rgba(255, 255, 255, 1) 100%);
@@ -54,11 +55,18 @@
     const imageDisplay = document.getElementById('imageDisplay');
     const valentineQuestion = document.getElementById('valentineQuestion');
     const responseButtons = document.getElementById('responseButtons');
-  
-    let noClickCount = 0;
-    let buttonHeight = 48; // Starting height in pixels
-    let buttonWidth = 80;
-    let fontSize = 20; // Starting font size in pixels
+
+    // Array of background gradients to cycle through
+    const backgrounds = [
+      "linear-gradient(180deg, rgba(255,208,229,1) 0%, rgba(255,232,242,1) 36%, rgba(255,255,255,1) 100%)",
+      "linear-gradient(180deg, rgba(200,230,255,1) 0%, rgba(220,240,255,1) 36%, rgba(255,255,255,1) 100%)",
+      "linear-gradient(180deg, rgba(200,255,200,1) 0%, rgba(220,255,220,1) 36%, rgba(255,255,255,1) 100%)",
+      "linear-gradient(180deg, rgba(255,200,200,1) 0%, rgba(255,220,220,1) 36%, rgba(255,255,255,1) 100%)",
+      "linear-gradient(180deg, rgba(255,255,200,1) 0%, rgba(255,255,220,1) 36%, rgba(255,255,255,1) 100%)",
+      "linear-gradient(180deg, rgba(220,200,255,1) 0%, rgba(230,220,255,1) 36%, rgba(255,255,255,1) 100%)"
+    ];
+    
+    // Array of images for the image display
     const imagePaths = [
       "./images/image1.gif",
       "./images/image2.gif",
@@ -68,23 +76,37 @@
       "./images/image6.gif",
       "./images/image7.gif"
     ];
-  
+
+    let noClickCount = 0;
+    let buttonHeight = 48; // Starting height in pixels
+    let buttonWidth = 80;
+    let fontSize = 20; // Starting font size in pixels
+
     noButton.addEventListener('click', function() {
       if (noClickCount < 5) {
         noClickCount++;
+
+        // Change the displayed image
         imageDisplay.src = imagePaths[noClickCount];
-        buttonHeight += 35; // Increase height by 5px on each click
+
+        // Increase button dimensions and font size
+        buttonHeight += 35;
         buttonWidth += 35;
-        fontSize += 25; // Increase font size by 1px on each click
-        yesButton.style.height = `${buttonHeight}px`; // Update button height
+        fontSize += 25;
+        yesButton.style.height = `${buttonHeight}px`;
         yesButton.style.width = `${buttonWidth}px`;
-        yesButton.style.fontSize = `${fontSize}px`; // Update font size
-        if (noClickCount < 6) {
-          noButton.textContent = ["No", "Are you sure?", "Pookie please", "Don't do this to me :(", "You're breaking my heart", "I'm gonna cry..."][noClickCount];
+        yesButton.style.fontSize = `${fontSize}px`;
+
+        // Update the noButton text
+        noButton.textContent = ["No", "Are you sure?", "Pookie please", "Don't do this to me :(", "You're breaking my heart", "I'm gonna cry..."][noClickCount];
+
+        // Change the background gradient dynamically if available
+        if (noClickCount < backgrounds.length) {
+          document.body.style.background = backgrounds[noClickCount];
         }
       }
     });
-  
+
     yesButton.addEventListener('click', () => {
       imageDisplay.src = './images/image7.gif'; // Change to image7.gif
       valentineQuestion.textContent = "Yayyy!! :3"; // Change the question text
